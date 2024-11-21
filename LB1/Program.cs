@@ -2,16 +2,23 @@ namespace LB1
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            // Добавление данных
+            using (ApplicationContext database = new ApplicationContext())
+            {
+                // Создаем два объекта User
+                User user1 = new User { Name = "Tom", Age = 33 };
+                User user2 = new User { Name = "Alice", Age = 26 };
+
+                // Добавляем их в БД
+                database.Users.AddRange(user1, user2);
+                database.SaveChanges();
+            }
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
